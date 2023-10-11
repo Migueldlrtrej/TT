@@ -24,7 +24,7 @@ const calis = () => {
         
         >
           <Text style={styles.buttonText}>
-            Cambiar Estilo
+            Intentar cambios
           </Text>
 
         </TouchableOpacity>
