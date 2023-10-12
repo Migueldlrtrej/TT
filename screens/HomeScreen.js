@@ -34,11 +34,14 @@ const HomeScreen = () => {
           >
             <Text style={styles.TextoBoton}>Consultar partidos</Text>
           </TouchableOpacity>
+         
+         
           <TouchableOpacity
             style={styles.boton}
-            onPress={() => navigation.navigate("SecretarioScreen")}
+            onPress={() => navigation.navigate("Secretario")}
           >
-            <Text style={styles.TextoBoton}>Secretario</Text>
+            
+            <Text style={styles.TextoBoton}>SecretarioScreen</Text>
           </TouchableOpacity>
 
           <TouchableOpacity

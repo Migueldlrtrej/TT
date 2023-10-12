@@ -1,123 +1,144 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
-import { Table, Row, Cell } from 'react-native-table-component';
+import React, { useState } from "react";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Table, Row } from "react-native-table-component";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useNavigation } from "@react-navigation/native";
 
-const Secretario = () => {
-  const [tableData1, setTableData1] = useState([
-    ['1', '2', '3'],
-    ['a', 'b', 'c'],
-    ['1', '2', '3'],
-    ['a', 'b', 'c']
-  ]);
+const SecretarioScreen = () => {
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
 
-  const [tableData2, setTableData2] = useState([
-    ['1', '2'],
-    ['a', 'b'],
-    ['1', '2'],
-    ['a', 'b']
-  ]);
-
-  const [tableData3, setTableData3] = useState([
-    ['1', '2', '3'],
-    ['a', 'b', 'c'],
-    ['1', '2', '3'],
-    ['a', 'b', 'c']
-  ]);
-
-  const [tableData4, setTableData4] = useState([
-    ['1', '2', '3'],
-    ['a', 'b', 'c'],
-    ['1', '2', '3'],
-    ['a', 'b', 'c']
-  ]);
-
-  const alertIndex = (index) => {
-    Alert.alert(`This is row ${index + 1}`);
+  const handleConfirm = (date) => {
+    // Lógica para manejar la fecha seleccionada.
+    setIsDatePickerVisible(false);
   };
 
-  // Función para renderizar el botón en la cuarta columna
-  const renderButton = (index) => (
-    <TouchableOpacity onPress={() => alertIndex(index)}>
-      <View style={styles.btn}>
-        <Text style={styles.btnText}>Button</Text>
-      </View>
-    </TouchableOpacity>
-  );
+  const showDatePicker = () => {
+    setIsDatePickerVisible(true);
+  };
 
+  const hideDatePicker = () => {
+    setIsDatePickerVisible(false);
+  };
+  const navigation = useNavigation();
+ 
   return (
-    <ScrollView contentContainerStyle={styles.scrollView}>
-      <View style={styles.container}>
-        {/* Tabla 1 con título */}
-        <Text style={styles.tableTitle}>Horario de</Text>
-        <Table borderStyle={{ borderColor: 'black', borderWidth: 1 }}>
-          <Row data={[' Partido', 'Fecha', 'Hora', 'Acciones']} style={styles.head} textStyle={styles.headText} />
-          {tableData1.map((rowData, rowIndex) => (
-            <Row
-              key={rowIndex}
-              data={[...rowData, renderButton(rowIndex)]}
-              style={rowIndex % 2 === 0 ? styles.rowEven : styles.rowOdd}
-              textStyle={styles.text}
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+      
+        <View style={styles.IconInput}>
+          
+          <TouchableOpacity>
+            <Ionicons name="menu" size={35} color="#000000" />
+          </TouchableOpacity>
+          <Text style={styles.titulo}>Secretario de liga</Text>
+        </View>
+        <Text style={styles.Subtitulo}>Validación equipos</Text>
+        <ScrollView horizontal={true}>
+          <View paddingHorizontal={10}>
+            <Table borderStyle={{ borderWidth: 1, borderColor: "#000000" }}>
+              <Row
+                data={["Equipo", "Rama", "Entrenador"]}
+                widthArr={[150, 50, 150]}
+                style={[styles.header, styles.tableRow]}
+                textStyle={styles.text}
+              />
+            </Table>
+          </View>
+        </ScrollView>
+
+        <View style={styles.boton}>
+          <View style={styles.IconInput}>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
             />
-          ))}
+            <TouchableOpacity onPress={showDatePicker} style={styles.button}>
+              <Ionicons name="calendar" size={35} color="#ffffff" />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <Table borderStyle={{ borderWidth: 1, borderColor: "#000000" }}>
+          <Row
+            data={["Número máximo de equipos por entrenador", "2"]}
+            widthArr={[150, 50]}
+            style={[styles.header, styles.tableRow]}
+            textStyle={styles.text}
+          />
         </Table>
 
-        {/* Tabla 2 con título */}
-        <Text style={styles.tableTitle}>Credenciales de jugador</Text>
-        <Table borderStyle={{ borderColor: 'black', borderWidth: 1 }}>
-          <Row data={['Jugador', 'Equipo', 'Credencial']} style={styles.head} textStyle={styles.headText} />
-          {tableData2.map((rowData, rowIndex) => (
-            <Row
-              key={rowIndex}
-              data={[...rowData, renderButton(rowIndex)]}
-              style={rowIndex % 2 === 0 ? styles.rowEven : styles.rowOdd}
-              textStyle={styles.text}
-            />
-          ))}
-        </Table>
+        <Text style={styles.Subtitulo}>Validación equipos</Text>
+        <ScrollView horizontal={true}>
+          <View paddingHorizontal={10}>
+            <Table borderStyle={{ borderWidth: 1, borderColor: "#000000" }}>
+              <Row
+                data={["Núm.Torneo", "Fecha de inicio", "Equipos"]}
+                widthArr={[100, 100, 100]}
+                style={[styles.header, styles.tableRow]}
+                textStyle={styles.text}
+              />
+              
+              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+              <Text style={styles.TextoBoton2}>Regresar </Text>
+              </TouchableOpacity>
 
-        {/* Tabla 3 con título */}
-        <Text style={styles.tableTitle}>Equipos inscritos</Text>
-        <Table borderStyle={{ borderColor: 'black', borderWidth: 1 }}>
-          <Row data={['Equipo', 'Rama', 'Entrenador', 'Eliminar']} style={styles.head} textStyle={styles.headText} />
-          {tableData3.map((rowData, rowIndex) => (
-            <Row
-              key={rowIndex}
-              data={[...rowData, renderButton(rowIndex)]}
-              style={rowIndex % 2 === 0 ? styles.rowEven : styles.rowOdd}
-              textStyle={styles.text}
-            />
-          ))}
-        </Table>
 
-        {/* Tabla 4 con título */}
-        <Text style={styles.tableTitle}>Hojas de anotacion</Text>
-        <Table borderStyle={{ borderColor: 'black', borderWidth: 1 }}>
-          <Row data={['Partido', 'Rana', 'Fecha', 'Hoja de anotación']} style={styles.head} textStyle={styles.headText} />
-          {tableData4.map((rowData, rowIndex) => (
-            <Row
-              key={rowIndex}
-              data={[...rowData, renderButton(rowIndex)]}
-              style={rowIndex % 2 === 0 ? styles.rowEven : styles.rowOdd}
-              textStyle={styles.text}
-            />
-          ))}
-        </Table>
-      </View>
-    </ScrollView>
+            </Table>
+          </View>
+        </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: { flexGrow: 1 },
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  head: { height: 40, backgroundColor: '#ff6624' },
-  headText: { margin: 6, fontWeight: 'bold', color: 'white' },
-  rowEven: { flexDirection: 'row', backgroundColor: 'white' },
-  rowOdd: { flexDirection: 'row', backgroundColor: 'white' },
-  text: { margin: 6 },
-  btn: { width: 58, height: 18, backgroundColor: '#ff6624', borderRadius: 2 },
-  btnText: { textAlign: 'center', color: '#fff' },
-  tableTitle: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginBottom: 10 },
+  container: {
+    flex: 1,
+    backgroundColor: "#ffffff", // Fondo con color blanco
+  },
+  contentContainer: {
+    flexGrow: 1,
+  },
+  IconInput: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+  },
+  titulo: {
+    fontSize: 24,
+    color: "#000000",
+  },
+  Subtitulo: {
+    fontSize: 20,
+    color: "#000000",
+  },
+  header: {
+    backgroundColor: "#ff6624", // Color de la primera fila de las tablas
+  },
+  tableRow: {
+    backgroundColor: "#ff6624", // Color de la primera fila de las tablas
+  },
+  text: {
+    margin: 6,
+    color: "#000000",
+  },
+  boton: {
+    backgroundColor: "#ff6624", // Color  botón
+    borderRadius: 5,
+    margin: 10,
+    alignItems: "center",
+  },
+  button: {
+    backgroundColor: "#ff6624", // Color botón
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
 });
 
-export default Secretario;
+export default SecretarioScreen;

@@ -9,7 +9,7 @@ import DrawerNavigation from "./screens/DrawerNavigation";
 import AdminScreen from "./screens/AdminScreen";
 import EntrenadorScreen from "./screens/EntrenadorScreen";
 import ComisionScreen from "./screens/ComisionScreen";
-
+import SecretarioScreen from "./screens/SecretarioScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -55,6 +55,11 @@ export default function App() {
           name="Comision"
           component={ComisionScreen}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+         name="Secretario"
+         component={SecretarioScreen}
+         options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
