@@ -34,6 +34,20 @@ const HomeScreen = () => {
           >
             <Text style={styles.TextoBoton}>Consultar partidos</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.boton}
+            onPress={() => navigation.navigate("SecretarioScreen")}
+          >
+            <Text style={styles.TextoBoton}>Secretario</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.boton}
+            onPress={() => navigation.navigate("Boton2Screen")}
+          >
+            <Text style={styles.TextoBoton}>JefeArbitros</Text>
+          </TouchableOpacity>
+
         </View>
       </View>
     </SafeAreaView>
